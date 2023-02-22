@@ -91,13 +91,6 @@ To run the project, execute the following command:
 
 https://github.com/joshualyngdoh/bookstore.git
 
-### Run tests
-
-To run tests, run the following command:
-
-- npx eslint "**/*.{js,jsx}"
-- npx stylelint "**/*.{css,scss}"
-
 <!-- AUTHORS -->
 
 ## 👥 Author <a name="authors"></a>
