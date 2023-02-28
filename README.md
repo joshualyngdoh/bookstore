@@ -48,6 +48,7 @@
 ### Key Features <a name="key-features"></a>
 
 - **[Add reducers and actions]**
+- **[Add redux]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
