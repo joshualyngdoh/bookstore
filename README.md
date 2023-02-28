@@ -47,7 +47,7 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **[To be implemented in the near future]**
+- **[Add reducers and actions]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
