@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 const ADD = 'ADD';
 const REMOVE = 'REMOVE';
 const GET_BOOKS = 'GET_BOOKS';
-const url = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/Hh517pOPUdJbRWvGSr6d/books/';
+const url = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/CgMjn0O45ITkQbdSriqK/books';
 
 export const getAllBooks = createAsyncThunk(GET_BOOKS, async (_, { dispatch }) => {
   const response = await fetch(url);
@@ -13,8 +13,15 @@ export const getAllBooks = createAsyncThunk(GET_BOOKS, async (_, { dispatch }) =
 });
 
 export const addBook = createAsyncThunk(ADD, async (book, { dispatch }) => {
-  await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(book) });
-  dispatch({ type: ADD, payload: book });
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(book),
+  });
+  const data = await response.json();
+  const addedBook = { ...book, item_id: data.name };
+  dispatch({ type: ADD, payload: addedBook });
+  return addedBook;
 });
 
 export const removeBook = createAsyncThunk(REMOVE, async (id, { dispatch }) => {
