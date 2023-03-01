@@ -5,7 +5,7 @@ import { addBook } from '../redux/books/booksSlice';
 
 function createBook(title, author) {
   return {
-    id: uuidv4(),
+    item_id: uuidv4(),
     title,
     author,
   };
@@ -17,6 +17,7 @@ function Form() {
   const dispatch = useDispatch();
 
   function clickHandler(e) {
+    e.preventDefault();
     const title = titleValue.current.value;
     const author = authorValue.current.value;
 
@@ -24,7 +25,7 @@ function Form() {
       dispatch(addBook(createBook(title, author)));
       titleValue.current.value = '';
       authorValue.current.value = '';
-    } else e.preventDefault();
+    }
   }
 
   return (

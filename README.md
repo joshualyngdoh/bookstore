@@ -49,6 +49,7 @@
 
 - **[Add reducers and actions]**
 - **[Add redux]**
+- **[Connect API]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
