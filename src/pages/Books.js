@@ -1,11 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Book from '../components/Book';
 import Form from '../components/Form';
 
 function Books() {
+  const books = useSelector((state) => state.books);
+
   return (
     <>
-      <Book title="A song of Ice and Fire" author="George.R.R.Martin" />
+      <ul>
+        {books.map((book) => (
+          <li key={book.id}>
+            <Book book={book} />
+          </li>
+        ))}
+      </ul>
       <Form />
     </>
   );

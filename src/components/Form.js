@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch } from 'react-redux';
+import { addBook } from '../redux/books/booksSlice';
+
+function createBook(title, author) {
+  return {
+    id: uuidv4(),
+    title,
+    author,
+  };
+}
 
 function Form() {
+  const titleValue = useRef();
+  const authorValue = useRef();
+  const dispatch = useDispatch();
+
+  function clickHandler(e) {
+    const title = titleValue.current.value;
+    const author = authorValue.current.value;
+
+    if (title !== '' && author !== '') {
+      dispatch(addBook(createBook(title, author)));
+      titleValue.current.value = '';
+      authorValue.current.value = '';
+    } else e.preventDefault();
+  }
+
   return (
     <div>
       <form>
-        <input type="text" name="author" id="author" placeholder="Add Book Author" />
-        <input type="text" name="title" id="title" placeholder="Add Book Title" />
-        <button type="button">Add Book</button>
+        <input type="text" name="title" id="title" placeholder="Add Book Title" ref={titleValue} required />
+        <input type="text" name="author" id="author" placeholder="Add Book Author" ref={authorValue} required />
+        <button type="button" onClick={clickHandler}>Add Book</button>
       </form>
     </div>
   );
