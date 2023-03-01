@@ -7,8 +7,8 @@ function Book({ book }) {
   const { id, title, author } = book;
 
   const dispatch = useDispatch();
-  const removeHandler = () => {
-    dispatch(removeBook(id));
+  const handleRemove = () => {
+    dispatch(removeBook({ id }));
   };
 
   return (
@@ -17,7 +17,7 @@ function Book({ book }) {
         <h3>{title}</h3>
         <h4>{author}</h4>
       </ul>
-      <button type="button" id={id} onClick={removeHandler}>Remove</button>
+      <button type="button" onClick={handleRemove}>Remove</button>
     </div>
   );
 }
