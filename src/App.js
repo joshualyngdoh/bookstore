@@ -7,6 +7,7 @@ function App() {
   return (
     <>
       <Router>
+        <div className="body-main" />
         <NavBar />
         <Routes>
           <Route path="/" element={<Books />} />

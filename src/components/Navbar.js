@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 
 function Navigation() {
   return (
-    <div>
+    <div className="nav">
+      <h1>Bookstore CMS</h1>
+      {'>'}
       <ul>
         <li>
           <Link to="/">Books</Link>
@@ -12,6 +14,9 @@ function Navigation() {
           <Link to="/categories">Categories</Link>
         </li>
       </ul>
+      <div className="outline" id="icon">
+        The book store
+      </div>
     </div>
   );
 }
