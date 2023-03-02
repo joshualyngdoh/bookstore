@@ -1,42 +1,66 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialState = [
-  {
-    id: uuidv4(),
-    title: 'The Great Gatsby',
-    author: 'John Smith',
-    category: 'Fiction',
-  },
-  {
-    id: uuidv4(),
-    title: 'Anna Karenina',
-    author: 'Leo Tolstoy',
-    category: 'Fiction',
-  },
-  {
-    id: uuidv4(),
-    title: 'The Selfish Gene',
-    author: 'Richard Dawkins',
-    category: 'Nonfiction',
-  },
-];
+const ADD = 'ADD';
+const REMOVE = 'REMOVE';
+const GET_BOOKS = 'GET_BOOKS';
+const url = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi/apps/CnrcRhBvrlcTbVRVQSJ9/books';
 
-const bookSlice = createSlice({
-  name: 'bookstore/books',
-  initialState,
-  reducers: {
-    addBook: (state, action) => {
-      const newBook = {
-        id: uuidv4(),
-        title: action.payload.title,
-        author: action.payload.author,
-      };
-      state.push(newBook);
-    },
-    removeBook: (state, action) => state.filter((book) => book.id !== action.payload.id),
+const getAllBooks = createAsyncThunk(
+  GET_BOOKS,
+  async (post, { dispatch }) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    const books = Object.keys(data).map((id) => ({
+      ...data[id][0],
+      item_id: id,
+    }));
+    dispatch({
+      type: GET_BOOKS,
+      payload: books,
+    });
   },
-});
+);
 
-export const { addBook, removeBook } = bookSlice.actions;
-export default bookSlice.reducer;
+const addBook = createAsyncThunk(
+  ADD,
+  async (book, { dispatch }) => {
+    await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(book),
+    });
+    dispatch({
+      type: ADD,
+      payload: book,
+    });
+  },
+);
+
+const removeBook = createAsyncThunk(
+  REMOVE,
+  async (id, { dispatch }) => {
+    await fetch(`${url}/${id}`, {
+      method: 'DELETE',
+    });
+    dispatch({
+      type: REMOVE,
+      payload: id,
+    });
+  },
+);
+
+const bookReducer = (state = [], action) => {
+  switch (action.type) {
+    case GET_BOOKS:
+      return action.payload;
+    case ADD:
+      return [...state, action.payload];
+    case REMOVE:
+      return [...state.filter((book) => book.item_id !== action.payload)];
+    default:
+      return state;
+  }
+};
+
+export { getAllBooks, addBook, removeBook };
+export default bookReducer;

@@ -3,20 +3,20 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { addBook } from '../redux/books/booksSlice';
 
-function createBook(title, author) {
-  return {
-    id: uuidv4(),
+const createBook = (title, author) => (
+  {
+    item_id: uuidv4(),
     title,
     author,
-  };
-}
+    category: 'Adventure',
+  }
+);
 
-function Form() {
+const Form = () => {
   const titleValue = useRef();
   const authorValue = useRef();
   const dispatch = useDispatch();
-
-  function clickHandler(e) {
+  const clickHandler = (e) => {
     const title = titleValue.current.value;
     const author = authorValue.current.value;
 
@@ -25,7 +25,7 @@ function Form() {
       titleValue.current.value = '';
       authorValue.current.value = '';
     } else e.preventDefault();
-  }
+  };
 
   return (
     <div>
@@ -36,6 +36,6 @@ function Form() {
       </form>
     </div>
   );
-}
+};
 
 export default Form;
