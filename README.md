@@ -50,6 +50,7 @@
 - **[Add reducers and actions]**
 - **[Add redux]**
 - **[Connect API]**
+- **[Add Styling]**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
